@@ -1,0 +1,762 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.cardContainer {
+  background-color: #eee;
+  width: 60%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(5, 12rem);
+  grid-template-rows: repeat(4, 12rem);
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  align-items: center;
+  justify-items: center;
+}
+
+.card {
+  width: 12rem;
+  height: 12rem;
+  perspective: 100rem;
+  position: relative;
+}
+
+.first-bubble {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  left: -10%;
+  top: -10%;
+  transition: all 0.2s;
+}
+
+.second-bubble {
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  right: -5%;
+  top: -5%;
+  transition: all 0.2s;
+}
+
+.third-bubble {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  right: -10%;
+  bottom: -10%;
+  transition: all 0.2s;
+}
+
+.forth-bubble {
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  left: -5%;
+  bottom: -5%;
+  transition: all 0.2s;
+}
+
+.backFace {
+  overflow: hidden;
+}
+
+.card.show .backFace {
+  transform: rotateY(180deg);
+}
+
+.card.show .frontFace {
+  transform: rotateY(0deg);
+}
+
+.card.disabled {
+  pointer-events: none;
+}
+
+.cardFaces {
+  width: 12rem;
+  height: 12rem;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+  transition: transform 0.5s;
+}
+
+.backFace:hover .first-bubble {
+  left: -20%;
+  top: -20%;
+}
+
+.backFace:hover .second-bubble {
+  right: -10%;
+  top: -10%;
+}
+
+.backFace:hover .third-bubble {
+  right: -20%;
+  bottom: -20%;
+}
+
+.backFace:hover .forth-bubble {
+  left: -10%;
+  bottom: -10%;
+}
+
+.backFace:active {
+  transform: translateY(1rem);
+}
+
+.frontFace {
+  background-color: white;
+  transform: rotateY(180deg);
+}
+
+.backFaceBGColorRed {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 72, 0),
+    rgb(240, 21, 68)
+  );
+}
+
+.backFaceBGColorBlue {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(0, 119, 255),
+    rgb(21, 171, 240)
+  );
+}
+
+.backFaceBGColorGreen {
+  background-image: linear-gradient(to right bottom, #229389, #57c3ad);
+}
+
+.backFaceBGColorOrange {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 153, 0),
+    rgb(255, 87, 45)
+  );
+}
+
+.backFaceBGColorPurple {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(111, 0, 255),
+    rgb(54, 35, 228)
+  );
+}
+
+.backFaceBGColorYellow {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 0, 0),
+    rgb(216, 42, 207)
+  );
+}
+
+.display {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+  gap: 2rem;
+}
+
+.display_items {
+  padding: 4rem;
+  width: 400px;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2rem rgb(128, 128, 128, 0.5);
+}
+
+.displayMove {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.displayTime {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  position: relative;
+  overflow: hidden;
+}
+
+.gameResultCount {
+  display: flex;
+  justify-content: space-between;
+  background-image: linear-gradient(90deg, #fc265c 50%, #4ac468 50%);
+}
+
+.totalLose,
+.totalWin {
+  font-size: 2.4rem;
+}
+
+.timeCounterBackground {
+  background-color: rgba(0, 0, 0, 0.2);
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: 100%;
+  position: absolute;
+}
+
+.btn {
+  width: fit-content;
+  border: 0;
+  outline: 0;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+  color: white;
+  text-transform: capitalize;
+}
+
+.audioController {
+  display: flex;
+  gap: 2rem;
+}
+
+.audio {
+  border: 0;
+  background-image: linear-gradient(to top left, #525252, #5c5c5c);
+  padding: 0;
+  padding: 1rem;
+  font-size: 2.4rem;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.btn:hover,
+.audio:hover {
+  background-image: linear-gradient(to top left, #000000, #000000);
+}
+
+.btn:active,
+.audio:active {
+  transform: translateY(0.5rem);
+}
+
+.creator {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.icon {
+  font-size: 4.5rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fa-star {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 255, 0),
+    rgb(247, 165, 57)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-lightbulb {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 255, 0),
+    rgb(255, 68, 0)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-fire-alt {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 0, 0),
+    rgb(255, 136, 0)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-seedling {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(0, 255, 42),
+    rgb(68, 182, 33)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-heart {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 0, 0),
+    rgb(212, 63, 155)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-camera {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(0, 68, 255),
+    rgb(132, 63, 212)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-calendar-alt {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(161, 45, 238),
+    rgb(34, 26, 146)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-guitar {
+  background-image: linear-gradient(
+    to right top,
+    rgb(47, 0, 255),
+    rgb(233, 1, 1)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-map {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(230, 255, 3),
+    rgb(35, 160, 18)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-dice-five {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 0, 0),
+    rgb(140, 0, 255)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.fa-fan {
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(2, 154, 255),
+    rgb(10, 255, 83)
+  );
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.startGame {
+  width: 60%;
+  height: fit-content;
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(50, 0, 255),
+    rgb(119, 0, 255)
+  );
+  color: white;
+  padding: 4rem;
+  border-radius: 1rem;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.start_first-bubble {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.2);
+  position: absolute;
+  right: -10%;
+  top: -10%;
+  z-index: -1;
+}
+
+.start_second-bubble {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.2);
+  position: absolute;
+  left: -10%;
+  bottom: -10%;
+  z-index: -1;
+}
+
+.start_third-bubble {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.2);
+  position: absolute;
+  right: -5%;
+  bottom: -5%;
+  z-index: -1;
+}
+
+.name {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 1rem 2rem;
+  font-size: 2.4rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 1rem;
+  color: white;
+}
+
+.name::-webkit-input-placeholder {
+  color: white;
+  font-weight: 400;
+}
+
+.winGame {
+  width: 60%;
+  height: fit-content;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  color: white;
+  padding: 5rem;
+  border-radius: 1rem;
+  z-index: 20;
+}
+
+.loseGame {
+  z-index: 10;
+  width: 60%;
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(255, 0, 0),
+    rgb(212, 63, 155)
+  );
+  padding: 5rem;
+  box-shadow: 0 1rem 3rem rgb(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
+  border-radius: 2rem;
+  text-transform: capitalize;
+  font-size: 2.4rem;
+}
+
+.content {
+  font-size: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.heading {
+  font-size: 4rem;
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+}
+
+.instructions_lists {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.instructions_list_item {
+  font-size: 2.2rem;
+  text-transform: capitalize;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 5;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hidden {
+  display: none;
+}
+
+.signature {
+  font-size: larger;
+  font-family: 'Style Script', cursive;
+  letter-spacing: 0.2rem;
+}
+
+@media (max-width: 1350px) {
+  .cardContainer {
+    grid-template-columns: repeat(5, 11rem);
+    grid-template-rows: repeat(4, 11rem);
+  }
+
+  .card {
+    width: 11rem;
+    height: 11rem;
+  }
+
+  .cardFaces {
+    width: 11rem;
+    height: 11rem;
+  }
+
+  .display_items {
+    width: 35rem;
+    padding: 3.5rem;
+  }
+
+  .display_items {
+    width: 35rem;
+    padding: 3.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cardContainer {
+    grid-template-columns: repeat(4, 11rem);
+    grid-template-rows: repeat(5, 11rem);
+  }
+}
+
+@media (max-width: 1000px) {
+  .cardContainer {
+    grid-template-columns: repeat(4, 9rem);
+    grid-template-rows: repeat(5, 9rem);
+  }
+
+  .icon {
+    font-size: 3.8rem;
+  }
+
+  .card {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .cardFaces {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .display_items {
+    width: 25rem;
+    padding: 2.5rem;
+  }
+
+  .display {
+    font-size: 2.4rem;
+  }
+
+  .totalWin,
+  .totalLose {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .cardContainer {
+    width: 100%;
+    height: 70vh;
+    grid-template-columns: repeat(5, 9rem);
+    grid-template-rows: repeat(4, 9rem);
+  }
+
+  .icon {
+    font-size: 3rem;
+  }
+
+  .display {
+    width: 100%;
+    height: 30vh;
+    gap: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    justify-content: space-evenly;
+    justify-items: space-evenly;
+    align-items: center;
+    justify-items: center;
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+
+  .totalLose,
+  .totalWin {
+    font-size: inherit;
+  }
+
+  .audio {
+    font-size: 1.8rem;
+  }
+
+  .display_items {
+    width: 100%;
+    height: fit-content;
+    padding: 1rem 2rem;
+  }
+
+  .startGame {
+    height: fit-content;
+    width: 95%;
+    padding: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .heading {
+    font-size: 2.4rem;
+    font-weight: 500;
+  }
+
+  .instructions_list_item {
+    font-size: 1.8rem;
+  }
+
+  .name {
+    font-size: 1.8rem;
+  }
+
+  .creator {
+    font-size: 1.6rem;
+  }
+
+  .btn {
+    font-size: 1.8rem;
+  }
+
+  .loseGame {
+    width: 95%;
+    padding: 2rem;
+  }
+
+  .content {
+    font-size: 1.8rem;
+  }
+
+  .winGame {
+    width: 95%;
+    padding: 2rem;
+  }
+
+  .gameResultCount {
+    grid-column: 1/3;
+    grid-row: 2/3;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 600px) {
+  .cardContainer {
+    grid-template-columns: repeat(4, 8rem);
+    grid-template-rows: repeat(5, 8rem);
+  }
+
+  .card {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .cardFaces {
+    width: 8rem;
+    height: 8rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .cardContainer {
+    grid-template-columns: repeat(4, 7rem);
+    grid-template-rows: repeat(5, 7rem);
+  }
+
+  .card {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .cardFaces {
+    width: 7rem;
+    height: 7rem;
+  }
+}

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,400;1,900&display=swap"
+        rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/29c2b75804.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Memory Game</title>
+</head>
+
+<body>
+    <audio src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3" id="music" autoplay
+        preload="none" loop></audio><audio src="https://assets.mixkit.co/sfx/preview/mixkit-click-error-1110.mp3"
+        id="unmatched" preload="none"></audio><audio
+        src="https://assets.mixkit.co/sfx/preview/mixkit-player-select-notification-2037.mp3" id="matched"
+        preload="none"></audio>
+    <div class="main">
+        <div class="cardContainer">
+            <div class="card" data-card="lightbulb">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-lightbulb icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="fire">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-fire-alt icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="gifts">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-calendar-alt icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="heart">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-heart icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="seedling">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-seedling icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="camera">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-camera icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="guitar">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-guitar icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="map">
+                <div class="frontFace cardFaces"><i class="fas fa-map icon"></i></div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="dice-five">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-dice-five icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="fan">
+                <div class="frontFace cardFaces"><i class="fas fa-fan icon"></i></div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="lightbulb">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-lightbulb icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="fire">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-fire-alt icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="gifts">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-calendar-alt icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="heart">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-heart icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="seedling">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-seedling icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="camera">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-camera icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="guitar">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-guitar icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="map">
+                <div class="frontFace cardFaces"><i class="fas fa-map icon"></i></div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="dice-five">
+                <div class="frontFace cardFaces">
+                    <i class="fas fa-dice-five icon"></i>
+                </div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+            <div class="card" data-card="fan">
+                <div class="frontFace cardFaces"><i class="fas fa-fan icon"></i></div>
+                <div class="backFace cardFaces">
+                    <div class="first-bubble"></div>
+                    <div class="second-bubble"></div>
+                    <div class="third-bubble"></div>
+                    <div class="forth-bubble"></div>
+                </div>
+            </div>
+        </div>
+        <div class="display">
+            <div class="audioController">
+                <button type="button" class="play audio">🔊</button><button type="button"
+                    class="pause audio">🔈</button>
+            </div>
+            <div class="display_items displayMove">
+                <span class="moves"><span class="movesText">🎯 moves : </span><span class="movesCount"></span></span>
+            </div>
+            <div class="display_items gameResultCount">
+                <span class="totalLose">⛔ Lose : <span class="totalLoseCount">0</span></span><span class="totalWin">🏆
+                    Win : <span class="totalWinCount">0</span></span>
+            </div>
+            <div class="display_items displayTime">
+                <div class="timeCounterBackground"></div>
+                <span class="timeText">⏳ time : </span><span class="time"></span>
+            </div>
+            <button id="restart" class="btn restart">restart</button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="startGame center">
+        <div class="start_first-bubble"></div>
+        <div class="start_second-bubble"></div>
+        <div class="start_third-bubble"></div>
+        <span class="heading">memory game</span>
+        <div class="instructions">
+            <ul class="instructions_lists">
+                <li class="instructions_list_item">
+                    <i class="fas fa-arrow-circle-right"></i> there is 10 pair of
+                    matching cards.
+                </li>
+                <li class="instructions_list_item">
+                    <i class="fas fa-arrow-circle-right"></i> all cards are flipped, to
+                    unflip the card just click on it
+                </li>
+                <li class="instructions_list_item">
+                    <i class="fas fa-arrow-circle-right"></i> you need to find all
+                    matching card within 65 second 🕐 to win
+                </li>
+                <li class="instructions_list_item">
+                    <i class="fas fa-arrow-circle-right"></i> enter your name and click
+                    on start to play
+                </li>
+            </ul>
+        </div>
+        <div class="input">
+            <input type="text" class="name" placeholder="Enter your name here" />
+        </div>
+        <button id="startButton" class="btn secondary">start</button><span class="creator">Made by <span
+                class="signature">rohan soni</span></span>
+    </div>
+    <div class="winGame center hidden">
+        <div class="content">
+            <h2 class="heading">Game finished</h2>
+            <div class="Congratulations">
+                Congratulations <span class="enteredName">unknown</span>you won ❤️
+            </div>
+            <div class="results">
+                <span class="moveResult">🎯 total moves : <span id="totalMove">?</span></span><span class="timeResult">⏳
+                    total time : <span id="totalTime">?</span></span>
+            </div>
+            <span class="comment">💯 <span class="enteredName">unknown</span>You've a very sharp
+                memory🔥🔥 </span><button id="playAgain" class="btn">Play again</button>
+        </div>
+    </div>
+    <div class="loseGame center hidden">
+        <div class="content">
+            <h2 class="heading">Game finished</h2>
+            <span class="loseGameMessage"><span class="enteredName">unknown</span>you loss game try again
+                ❌</span><button id="tryAgain" class="btn">Try again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
