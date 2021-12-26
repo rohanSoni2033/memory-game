@@ -1,3 +1,40 @@
+const cardContainer = document.querySelector('.cardContainer');
+
+const cards = [
+  'lightbulb',
+  'fire-alt',
+  'calendar-alt',
+  'heart',
+  'seedling',
+  'camera',
+  'guitar',
+  'map',
+  'dice-five',
+  'fan',
+];
+
+const createCards = () => {
+  cards.forEach((card) => {
+    const html = `
+    <div class="card" data-card="${card}">
+        <div class="frontFace cardFaces">
+            <i class="fas fa-${card} icon"></i>
+        </div>
+        <div class="backFace cardFaces">
+            <div class="first-bubble"></div>
+            <div class="second-bubble"></div>
+            <div class="third-bubble"></div>
+            <div class="forth-bubble"></div>
+        </div>
+    </div>`;
+
+    cardContainer.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+createCards();
+createCards();
+
 var randomColor;
 var finishCard = 0;
 var movesCount = 0;
@@ -34,7 +71,6 @@ shuffle();
 
 function backgroundColor() {
   randomColor = Math.trunc(Math.random() * 6 + 1);
-  console.log(randomColor);
 
   for (var i = 0; i < cardBackFace.length; i++) {
     cardBackFace[i].classList.remove(
@@ -76,7 +112,6 @@ document.getElementById('tryAgain').addEventListener('click', tryAgain);
 function startGame() {
   myMusic.play();
   playerName = document.querySelector('.name').value;
-  console.log(playerName);
   document.querySelector('.startGame').classList.add('hidden');
   document.querySelector('.overlay').classList.add('hidden');
   countdown();
@@ -100,7 +135,6 @@ function tryAgain() {
 
 function hideCard() {
   lockCard = true;
-  console.log('different card');
 
   setTimeout(
     function () {
