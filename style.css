@@ -23,7 +23,6 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
 }
 
 .cardContainer {
@@ -46,48 +45,39 @@ body {
   position: relative;
 }
 
-.first-bubble {
-  width: 70%;
-  height: 70%;
+.bubbles {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   position: absolute;
+  transition: all 0.2s;
+}
+
+.first-bubble {
+  width: 70%;
+  height: 70%;
   left: -10%;
   top: -10%;
-  transition: all 0.2s;
 }
 
 .second-bubble {
   width: 30%;
   height: 30%;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  position: absolute;
   right: -5%;
   top: -5%;
-  transition: all 0.2s;
 }
 
 .third-bubble {
   width: 50%;
   height: 50%;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  position: absolute;
   right: -10%;
   bottom: -10%;
-  transition: all 0.2s;
 }
 
 .forth-bubble {
   width: 20%;
   height: 20%;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  position: absolute;
   left: -5%;
   bottom: -5%;
-  transition: all 0.2s;
 }
 
 .backFace {
@@ -143,50 +133,6 @@ body {
 .frontFace {
   background-color: white;
   transform: rotateY(180deg);
-}
-
-.backFaceBGColorRed {
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(255, 72, 0),
-    rgb(240, 21, 68)
-  );
-}
-
-.backFaceBGColorBlue {
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(0, 119, 255),
-    rgb(21, 171, 240)
-  );
-}
-
-.backFaceBGColorGreen {
-  background-image: linear-gradient(to right bottom, #229389, #57c3ad);
-}
-
-.backFaceBGColorOrange {
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(255, 153, 0),
-    rgb(255, 87, 45)
-  );
-}
-
-.backFaceBGColorPurple {
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(111, 0, 255),
-    rgb(54, 35, 228)
-  );
-}
-
-.backFaceBGColorYellow {
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(255, 0, 0),
-    rgb(216, 42, 207)
-  );
 }
 
 .display {

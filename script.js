@@ -21,10 +21,10 @@ const createCards = () => {
             <i class="fas fa-${card} icon"></i>
         </div>
         <div class="backFace cardFaces">
-            <div class="first-bubble"></div>
-            <div class="second-bubble"></div>
-            <div class="third-bubble"></div>
-            <div class="forth-bubble"></div>
+            <div class="first-bubble bubbles"></div>
+            <div class="second-bubble bubbles"></div>
+            <div class="third-bubble bubbles"></div>
+            <div class="forth-bubble bubbles"></div>
         </div>
     </div>`;
 
@@ -52,7 +52,7 @@ const timeCounterBackground = document.querySelector('.timeCounterBackground');
 
 let nameArray = document.querySelectorAll('.enteredName');
 document.querySelector('.movesCount').textContent = movesCount;
-var cardBackFace = document.querySelectorAll('.backFace');
+const cardBackFace = document.querySelectorAll('.backFace');
 
 var myMusic = document.getElementById('music');
 document.querySelector('.play').addEventListener('click', play);
@@ -66,37 +66,25 @@ function pause() {
   myMusic.pause();
 }
 
-backgroundColor();
 shuffle();
 
-function backgroundColor() {
-  randomColor = Math.trunc(Math.random() * 6 + 1);
+const backgroundColor = () => {
+  const colors = [
+    '#ff4800, #f01544',
+    '#0077ff, #15abf0',
+    '#229389, #57c3ad',
+    '#ff9900, #ff572d',
+    '#6f00ff, #3623e4',
+    '#ff0000, #d82acf',
+  ];
+  const randomColor = Math.floor(Math.random() * colors.length);
 
-  for (var i = 0; i < cardBackFace.length; i++) {
-    cardBackFace[i].classList.remove(
-      'backFaceBGColorRed',
-      'backFaceBGColorGreen',
-      'backFaceBGColorPurple',
-      'backFaceBGColorBlue',
-      'backFaceBGColorOrange',
-      'backFaceBGColorYellow'
-    );
+  cardBackFace.forEach((card) => {
+    card.style.backgroundImage = `linear-gradient(to right bottom, ${colors[randomColor]})`;
+  });
+};
 
-    if (randomColor == 1) {
-      cardBackFace[i].classList.add('backFaceBGColorRed');
-    } else if (randomColor == 2) {
-      cardBackFace[i].classList.add('backFaceBGColorGreen');
-    } else if (randomColor == 3) {
-      cardBackFace[i].classList.add('backFaceBGColorPurple');
-    } else if (randomColor == 4) {
-      cardBackFace[i].classList.add('backFaceBGColorOrange');
-    } else if (randomColor == 5) {
-      cardBackFace[i].classList.add('backFaceBGColorBlue');
-    } else if (randomColor == 6) {
-      cardBackFace[i].classList.add('backFaceBGColorYellow');
-    }
-  }
-}
+backgroundColor();
 
 function resetCard() {
   for (var i = 0; i < deck.length; i++) {
