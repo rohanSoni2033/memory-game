@@ -42,15 +42,15 @@ let timeLeft = gameTime;
 let totalWin = 0;
 let totalLose = 0;
 let winner = false;
-var deck = document.querySelectorAll('.card');
+
 let hasFlippedCard = false;
 let firstCard, secondCard;
 let lockCard;
 let playerName;
-const timeCounterBackground = document.querySelector('.timeCounterBackground');
 
-let nameArray = document.querySelectorAll('.enteredName');
-document.querySelector('.movesCount').textContent = movesCount;
+const deck = document.querySelectorAll('.card');
+const timeCounterBackground = document.querySelector('.timeCounterBackground');
+const username = document.querySelectorAll('.enteredName');
 const cardBackFace = document.querySelectorAll('.backFace');
 
 var myMusic = document.getElementById('music');
@@ -91,33 +91,44 @@ function resetCard() {
   }
 }
 
-document.getElementById('startButton').addEventListener('click', startGame);
-document.getElementById('restart').addEventListener('click', resetGame);
-document.getElementById('playAgain').addEventListener('click', playAgain);
-document.getElementById('tryAgain').addEventListener('click', tryAgain);
+const startButton = document.getElementById('startButton');
+const restartButton = document.getElementById('restartButton');
+const playAgainButton = document.getElementById('playAgainButton');
+const tryAgainButton = document.getElementById('tryAgainButton');
+
+const overlay = document.querySelector('.overlay');
+const startGameModal = document.querySelector('.startGame');
+const winGameModal = document.querySelector('.winGame');
+const loseGameModal = document.querySelector('.loseGame');
+
+startButton.addEventListener('click', startGame);
+restartButton.addEventListener('click', resetGame);
+playAgainButton.addEventListener('click', playAgain);
+tryAgainButton.addEventListener('click', tryAgain);
+document.querySelector('.movesCount').textContent = movesCount;
 
 function startGame() {
   myMusic.play();
   playerName = document.querySelector('.name').value;
-  document.querySelector('.startGame').classList.add('hidden');
-  document.querySelector('.overlay').classList.add('hidden');
+  startGameModal.classList.add('hidden');
+  overlay.classList.add('hidden');
   countdown();
 
-  for (var i = 0; i < nameArray.length; i++) {
-    nameArray[i].textContent = playerName;
+  for (var i = 0; i < username.length; i++) {
+    username[i].textContent = playerName;
   }
 }
 
 function playAgain() {
   resetGame();
-  document.querySelector('.overlay').classList.add('hidden');
-  document.querySelector('.winGame').classList.add('hidden');
+  overlay.classList.add('hidden');
+  winGameModal.classList.add('hidden');
 }
 
 function tryAgain() {
   resetGame();
-  document.querySelector('.overlay').classList.add('hidden');
-  document.querySelector('.loseGame').classList.add('hidden');
+  overlay.classList.add('hidden');
+  loseGameModal.classList.add('hidden');
 }
 
 function hideCard() {
@@ -215,8 +226,8 @@ function winGame() {
   let totalTime = gameTime - timeLeft;
 
   setTimeout(function () {
-    document.querySelector('.overlay').classList.remove('hidden');
-    document.querySelector('.winGame').classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    winGameModal.classList.remove('hidden');
     document.querySelector('#totalMove').textContent = movesCount;
     document.querySelector('#totalTime').textContent = totalTime + 's';
   }, 1000);
@@ -225,8 +236,8 @@ function winGame() {
 function loseGame() {
   totalLose++;
   document.querySelector('.totalLoseCount').innerHTML = totalLose;
-  document.querySelector('.overlay').classList.remove('hidden');
-  document.querySelector('.loseGame').classList.remove('hidden');
+  overlay.classList.remove('hidden');
+  loseGameModal.classList.remove('hidden');
 }
 
 function resetGame() {

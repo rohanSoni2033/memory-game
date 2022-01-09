@@ -240,11 +240,7 @@ body {
 .startGame {
   width: 60%;
   height: fit-content;
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(50, 0, 255),
-    rgb(119, 0, 255)
-  );
+  background-image: linear-gradient(to right bottom, #3200ff, #7700ff);
   color: white;
   padding: 4rem;
   border-radius: 1rem;
@@ -271,7 +267,7 @@ body {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255, 0.2);
+  background-color: #ffffff33;
   position: absolute;
   left: -10%;
   bottom: -10%;
@@ -282,7 +278,7 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255, 0.2);
+  background-color: #ffffff33;
   position: absolute;
   right: -5%;
   bottom: -5%;
@@ -295,8 +291,8 @@ body {
   outline: 0;
   padding: 1rem 2rem;
   font-size: 2.4rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 2px solid rgb(255, 255, 255);
+  background-color: #00000033;
+  border: 2px solid #ffffff;
   border-radius: 1rem;
   color: white;
 }
@@ -319,14 +315,10 @@ body {
 .loseGame {
   z-index: 10;
   width: 60%;
-  background-image: linear-gradient(
-    to right bottom,
-    rgb(255, 0, 0),
-    rgb(212, 63, 155)
-  );
+  background-image: linear-gradient(to right bottom, #ff0000, #d43f9b);
   padding: 5rem;
-  box-shadow: 0 1rem 3rem rgb(0, 0, 0, 0.5);
-  color: rgb(255, 255, 255);
+  box-shadow: 0 1rem 3rem #00000080;
+  color: #ffffff;
   border-radius: 2rem;
   text-transform: capitalize;
   font-size: 2.4rem;
