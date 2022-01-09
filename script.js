@@ -1,24 +1,24 @@
 const cardContainer = document.querySelector('.cardContainer');
 
 const cards = [
-  'lightbulb',
-  'fire-alt',
-  'calendar-alt',
-  'heart',
-  'seedling',
-  'camera',
-  'guitar',
-  'map',
-  'dice-five',
-  'fan',
+  { card_icon: 'lightbulb', color: '#ffff00,#ff4400' },
+  { card_icon: 'fire-alt', color: '#ff0000,#ff8800' },
+  { card_icon: 'calendar-alt', color: '#a12dee,#221a92' },
+  { card_icon: 'heart', color: '#ff0000,#d43f9b' },
+  { card_icon: 'seedling', color: '#00ff2a,#44b621' },
+  { card_icon: 'camera', color: '#0044ff,#843fd4' },
+  { card_icon: 'guitar', color: '#2f00ff,#e90101' },
+  { card_icon: 'map', color: '#e6ff03,#23a012' },
+  { card_icon: 'dice-five', color: '#ff0000,#8c00ff' },
+  { card_icon: 'fan', color: '#029aff,#0aff53' },
 ];
 
 const createCards = () => {
   cards.forEach((card) => {
     const html = `
-    <div class="card" data-card="${card}">
+    <div class="card" data-card="${card.card_icon}">
         <div class="frontFace cardFaces">
-            <i class="fas fa-${card} icon"></i>
+            <i class="fas fa-${card.card_icon} icon" style="background-image: linear-gradient(to right bottom, ${card.color})"></i>
         </div>
         <div class="backFace cardFaces">
             <div class="first-bubble bubbles"></div>
@@ -35,7 +35,6 @@ const createCards = () => {
 createCards();
 createCards();
 
-var randomColor;
 var finishCard = 0;
 var movesCount = 0;
 let gameTime = 65;
