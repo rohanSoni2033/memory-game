@@ -37,7 +37,7 @@ createCards();
 
 var finishCard = 0;
 var movesCount = 0;
-let gameTime = 65;
+const gameTime = 100;
 let timeLeft = gameTime;
 let totalWin = 0;
 let totalLose = 0;
@@ -65,6 +65,13 @@ function pause() {
   myMusic.pause();
 }
 
+const shuffle = () => {
+  deck.forEach((card) => {
+    const random = Math.floor(Math.random() * 20);
+    card.style.order = random;
+  });
+};
+
 shuffle();
 
 const backgroundColor = () => {
@@ -85,26 +92,25 @@ const backgroundColor = () => {
 
 backgroundColor();
 
-function resetCard() {
-  for (var i = 0; i < deck.length; i++) {
-    deck[i].classList.remove('show');
-  }
-}
+const resetCard = () => {
+  deck.forEach((card) => card.classList.remove('show'));
+};
 
+const main = document.querySelector('.main');
 const startButton = document.getElementById('startButton');
 const restartButton = document.getElementById('restartButton');
 const playAgainButton = document.getElementById('playAgainButton');
-const tryAgainButton = document.getElementById('tryAgainButton');
 
 const overlay = document.querySelector('.overlay');
 const startGameModal = document.querySelector('.startGame');
-const winGameModal = document.querySelector('.winGame');
-const loseGameModal = document.querySelector('.loseGame');
+// const winGameModal = document.querySelector('.winGame');
+// const loseGameModal = document.querySelector('.loseGame');
 
-startButton.addEventListener('click', startGame);
-restartButton.addEventListener('click', resetGame);
-playAgainButton.addEventListener('click', playAgain);
-tryAgainButton.addEventListener('click', tryAgain);
+const init = function () {
+  startButton.addEventListener('click', startGame);
+  restartButton.addEventListener('click', resetGame);
+};
+
 document.querySelector('.movesCount').textContent = movesCount;
 
 function startGame() {
@@ -119,17 +125,15 @@ function startGame() {
   }
 }
 
-function playAgain() {
+const playAgain = () => {
   resetGame();
   overlay.classList.add('hidden');
-  winGameModal.classList.add('hidden');
-}
+};
 
-function tryAgain() {
+const tryAgain = () => {
   resetGame();
   overlay.classList.add('hidden');
-  loseGameModal.classList.add('hidden');
-}
+};
 
 function hideCard() {
   lockCard = true;
@@ -146,7 +150,7 @@ function hideCard() {
   );
 }
 
-function countdown() {
+const countdown = () => {
   document.querySelector('.time').textContent = timeLeft + 's';
 
   setInterval(
@@ -167,9 +171,9 @@ function countdown() {
 
     1000
   );
-}
+};
 
-function show() {
+const show = function () {
   if (lockCard) return;
   if (this === firstCard) return;
   this.classList.add('show');
@@ -184,63 +188,87 @@ function show() {
     secondCard = this;
     check();
   }
-}
+};
 
-function check() {
-  if (firstCard.dataset.card === secondCard.dataset.card) {
-    disableCard();
-    finishCard++;
-    matched.play();
-
-    if (finishCard == 10) {
-      winGame();
-    }
-  } else {
-    hideCard();
-  }
-}
-
-function disableCard() {
+const disableCard = () => {
   firstCard.classList.add('disabled');
   secondCard.classList.add('disabled');
   resetDeck();
-}
+};
 
-function unDisableCard() {
-  for (var i = 0; i < deck.length; i++) {
-    deck[i].classList.remove('disabled');
-  }
-
+const unDisableCard = () => {
+  deck.forEach((card) => card.classList.remove('disabled'));
   resetDeck();
-}
+};
 
-function resetDeck() {
+const resetDeck = () => {
   [hasFlippedCard, lockCard] = [false, false];
   [firstCard, secondCard] = [null, null];
-}
+};
 
-function winGame() {
+const winGame = () => {
   winner = true;
   totalWin++;
   document.querySelector('.totalWinCount').innerHTML = totalWin;
   let totalTime = gameTime - timeLeft;
 
-  setTimeout(function () {
+  setTimeout(() => {
     overlay.classList.remove('hidden');
-    winGameModal.classList.remove('hidden');
+    const markup = `<div class="winGame center">
+        <div class="content">
+            <h2 class="heading">Game finished</h2>
+            <div class="Congratulations">
+                Congratulations <span class="enteredName">unknown</span>you won ❤️
+            </div>
+            <div class="results">
+                <span class="moveResult">🎯 total moves : <span id="totalMove">?</span></span><span class="timeResult">⏳
+                    total time : <span id="totalTime">?</span></span>
+            </div>
+            <span class="comment">💯 <span class="enteredName">unknown</span>You've a very sharp
+                memory🔥🔥 </span><button id="playAgainButton" class="btn">Play again</button>
+        </div>
+    </div>`;
+
+    main.insertAdjacentHTML('beforeend', markup);
+
+    const winGameModal = document.querySelector('.winGame');
+    const playAgainButton = document.getElementById('playAgainButton');
+
+    playAgainButton.addEventListener('click', () => {
+      winGameModal.remove();
+      playAgain();
+    });
+
     document.querySelector('#totalMove').textContent = movesCount;
     document.querySelector('#totalTime').textContent = totalTime + 's';
   }, 1000);
-}
+};
 
-function loseGame() {
+const loseGame = () => {
   totalLose++;
   document.querySelector('.totalLoseCount').innerHTML = totalLose;
   overlay.classList.remove('hidden');
-  loseGameModal.classList.remove('hidden');
-}
+  const markup = `
+  <div class="loseGame center">
+        <div class="content">
+            <h2 class="heading">Game finished</h2>
+            <span class="loseGameMessage"><span class="enteredName">unknown</span>you loss game try again
+                ❌</span><button id="tryAgainButton" class="btn">Try again</button>
+        </div>
+    </div>`;
 
-function resetGame() {
+  main.insertAdjacentHTML('beforeend', markup);
+
+  const loseGameModal = document.querySelector('.loseGame');
+  const tryAgainButton = document.getElementById('tryAgainButton');
+
+  tryAgainButton.addEventListener('click', () => {
+    loseGameModal.remove();
+    tryAgain();
+  });
+};
+
+const resetGame = () => {
   backgroundColor();
 
   setTimeout(function () {
@@ -256,15 +284,26 @@ function resetGame() {
   hasFlippedCard = false;
   document.querySelector('.movesCount').textContent = movesCount;
   unDisableCard();
-}
+};
 
-for (var i = 0; i < deck.length; i++) {
-  deck[i].addEventListener('click', show);
-}
+const check = () => {
+  if (firstCard.dataset.card === secondCard.dataset.card) {
+    disableCard();
+    finishCard++;
+    matched.play();
 
-function shuffle() {
-  deck.forEach((card) => {
-    let randomPos = Math.floor(Math.random() * 20);
-    card.style.order = randomPos;
-  });
-}
+    if (finishCard === 10) {
+      winGame();
+    }
+  } else {
+    hideCard();
+  }
+};
+
+const addHandlerCard = function () {
+  deck.forEach((card) => card.addEventListener('click', show));
+};
+
+addHandlerCard();
+
+init();
