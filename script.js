@@ -11,6 +11,25 @@ const cards = [
   { card_icon: 'map', color: '#e6ff03,#23a012' },
   { card_icon: 'dice-five', color: '#ff0000,#8c00ff' },
   { card_icon: 'fan', color: '#029aff,#0aff53' },
+  { card_icon: 'lightbulb', color: '#ffff00,#ff4400' },
+  { card_icon: 'fire-alt', color: '#ff0000,#ff8800' },
+  { card_icon: 'calendar-alt', color: '#a12dee,#221a92' },
+  { card_icon: 'heart', color: '#ff0000,#d43f9b' },
+  { card_icon: 'seedling', color: '#00ff2a,#44b621' },
+  { card_icon: 'camera', color: '#0044ff,#843fd4' },
+  { card_icon: 'guitar', color: '#2f00ff,#e90101' },
+  { card_icon: 'map', color: '#e6ff03,#23a012' },
+  { card_icon: 'dice-five', color: '#ff0000,#8c00ff' },
+  { card_icon: 'fan', color: '#029aff,#0aff53' },
+];
+
+const colors = [
+  '#ff4800, #f01544',
+  '#0077ff, #15abf0',
+  '#229389, #57c3ad',
+  '#ff9900, #ff572d',
+  '#6f00ff, #3623e4',
+  '#ff0000, #d82acf',
 ];
 
 const createCards = () => {
@@ -33,11 +52,10 @@ const createCards = () => {
 };
 
 createCards();
-createCards();
 
-var finishCard = 0;
-var movesCount = 0;
-const gameTime = 100;
+let finishCard = 0;
+let movesCount = 0;
+const gameTime = 65;
 let timeLeft = gameTime;
 let totalWin = 0;
 let totalLose = 0;
@@ -50,10 +68,9 @@ let playerName;
 
 const deck = document.querySelectorAll('.card');
 const timeCounterBackground = document.querySelector('.timeCounterBackground');
-const username = document.querySelectorAll('.enteredName');
 const cardBackFace = document.querySelectorAll('.backFace');
 
-var myMusic = document.getElementById('music');
+let myMusic = document.getElementById('music');
 document.querySelector('.play').addEventListener('click', play);
 document.querySelector('.pause').addEventListener('click', pause);
 
@@ -75,14 +92,6 @@ const shuffle = () => {
 shuffle();
 
 const backgroundColor = () => {
-  const colors = [
-    '#ff4800, #f01544',
-    '#0077ff, #15abf0',
-    '#229389, #57c3ad',
-    '#ff9900, #ff572d',
-    '#6f00ff, #3623e4',
-    '#ff0000, #d82acf',
-  ];
   const randomColor = Math.floor(Math.random() * colors.length);
 
   cardBackFace.forEach((card) => {
@@ -103,8 +112,6 @@ const playAgainButton = document.getElementById('playAgainButton');
 
 const overlay = document.querySelector('.overlay');
 const startGameModal = document.querySelector('.startGame');
-// const winGameModal = document.querySelector('.winGame');
-// const loseGameModal = document.querySelector('.loseGame');
 
 const init = function () {
   startButton.addEventListener('click', startGame);
@@ -119,10 +126,6 @@ function startGame() {
   startGameModal.classList.add('hidden');
   overlay.classList.add('hidden');
   countdown();
-
-  for (var i = 0; i < username.length; i++) {
-    username[i].textContent = playerName;
-  }
 }
 
 const playAgain = () => {
@@ -214,19 +217,20 @@ const winGame = () => {
 
   setTimeout(() => {
     overlay.classList.remove('hidden');
-    const markup = `<div class="winGame center">
-        <div class="content">
-            <h2 class="heading">Game finished</h2>
-            <div class="Congratulations">
-                Congratulations <span class="enteredName">unknown</span>you won ❤️
-            </div>
-            <div class="results">
-                <span class="moveResult">🎯 total moves : <span id="totalMove">?</span></span><span class="timeResult">⏳
-                    total time : <span id="totalTime">?</span></span>
-            </div>
-            <span class="comment">💯 <span class="enteredName">unknown</span>You've a very sharp
-                memory🔥🔥 </span><button id="playAgainButton" class="btn">Play again</button>
+    const markup = `
+    <div class="winGame center">
+      <div class="content">
+        <h2 class="heading">Game finished</h2>
+        <span class="Congratulations">Congratulations ${playerName} you won ❤️</span>
+        <div class="results">
+            <span class="moveResult">🎯 total moves : <span id="totalMove">?</span></span>
+            <span class="timeResult">⏳
+                    total time : <span id="totalTime">?</span>
+            </span>
         </div>
+        <span class="comment">💯 ${playerName} You've a very sharp memory🔥🔥</span>
+        <button id="playAgainButton" class="btn">Play again</button>
+      </div>
     </div>`;
 
     main.insertAdjacentHTML('beforeend', markup);
@@ -250,12 +254,12 @@ const loseGame = () => {
   overlay.classList.remove('hidden');
   const markup = `
   <div class="loseGame center">
-        <div class="content">
-            <h2 class="heading">Game finished</h2>
-            <span class="loseGameMessage"><span class="enteredName">unknown</span>you loss game try again
-                ❌</span><button id="tryAgainButton" class="btn">Try again</button>
-        </div>
-    </div>`;
+    <div class="content">
+      <h2 class="heading">Game finished</h2>
+      <span class="loseGameMessage">${playerName} you loss game try again❌</span>
+      <button id="tryAgainButton" class="btn">Try again</button>
+    </div>
+  </div>`;
 
   main.insertAdjacentHTML('beforeend', markup);
 
