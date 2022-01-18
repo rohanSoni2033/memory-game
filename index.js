@@ -1,4 +1,11 @@
 const cardContainer = document.querySelector('.cardContainer');
+const startButton = document.querySelector('#startButton');
+const inputName = document.querySelector('.name');
+const movesCount = document.querySelector('.movesCount');
+const time = document.querySelector('.time');
+const overlay = document.querySelector('.overlay');
+const startGameModal = document.querySelector('.startGame');
+
 const cards = [
   { card_icon: 'lightbulb', color: '#ffff00,#ff4400' },
   { card_icon: 'fire-alt', color: '#ff0000,#ff8800' },
@@ -33,12 +40,20 @@ const colors = [
 
 class Game {
   playerName;
-  gameTime;
+  gameTime = 65;
+  countdown = 0;
+  firstCard;
+  secondCard;
+  hasFlippedCard = false;
+  finishedCard = 0;
+  movesCount = 0;
 
   constructor() {
     this._createCards();
     this.deck = document.querySelectorAll('.card');
+    this._startGame();
     this._shuffle();
+    this._handlerCards();
   }
 
   _createCards() {
@@ -65,6 +80,64 @@ class Game {
       const random = Math.floor(Math.random() * 20);
       card.style.order = random;
     });
+  }
+
+  _startGame() {
+    startButton.addEventListener('click', () => {
+      this.playerName = inputName.value;
+      overlay.classList.add('hidden');
+      startGameModal.classList.add('hidden');
+      this._startCountdown();
+    });
+  }
+
+  _handlerCards() {
+    this.cards = document.querySelectorAll('.card');
+    this.cards.forEach((card) =>
+      card.addEventListener('click', () => {
+        this._showCard(card);
+      })
+    );
+  }
+
+  _showCard(card) {
+    if (this.hasFlippedCard) {
+      this.secondCard = card;
+      this.hasFlippedCard = false;
+      this._check();
+    } else {
+      this.firstCard = card;
+      this.hasFlippedCard = true;
+    }
+    this.movesCount++;
+    this._updateUI();
+    card.classList.add('show');
+  }
+
+  _check() {
+    if (this.firstCard.dataset.card === this.secondCard.dataset.card) {
+      this.finishedCard++;
+    } else {
+      this._hideCards();
+    }
+  }
+
+  _hideCards() {
+    setTimeout(() => {
+      this.firstCard.classList.remove('show');
+      this.secondCard.classList.remove('show');
+    }, 500);
+  }
+
+  _updateUI() {
+    movesCount.textContent = `${this.movesCount}`;
+  }
+
+  _startCountdown() {
+    setInterval(() => {
+      this.countdown++;
+      time.textContent = `${this.gameTime - this.countdown}`;
+    }, 1000);
   }
 }
 
