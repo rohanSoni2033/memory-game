@@ -347,6 +347,11 @@ a {
 }
 
 @media (max-width:650px) {
+
+  .main {
+    padding: 0 1.6rem;
+  }
+
   .card-container {
     grid-template-columns: repeat(4, 9.5rem);
     grid-template-rows: repeat(6, 9.5rem);
