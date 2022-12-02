@@ -1,6 +1,6 @@
-const cardContainer = document.querySelector('.cardContainer');
+const cardContainer = document.querySelector('.card-container');
 
-const cards = [
+const cardIcons = [
   { card_icon: 'lightbulb', color: '#ffff00,#ff4400' },
   { card_icon: 'fire-alt', color: '#ff0000,#ff8800' },
   { card_icon: 'calendar-alt', color: '#a12dee,#221a92' },
@@ -11,6 +11,8 @@ const cards = [
   { card_icon: 'map', color: '#e6ff03,#23a012' },
   { card_icon: 'dice-five', color: '#ff0000,#8c00ff' },
   { card_icon: 'fan', color: '#029aff,#0aff53' },
+  { card_icon: 'umbrella', color: '#ff0000,#8c00ff' },
+  { card_icon: 'walking', color: '#029aff,#0aff53' },
   { card_icon: 'lightbulb', color: '#ffff00,#ff4400' },
   { card_icon: 'fire-alt', color: '#ff0000,#ff8800' },
   { card_icon: 'calendar-alt', color: '#a12dee,#221a92' },
@@ -21,9 +23,14 @@ const cards = [
   { card_icon: 'map', color: '#e6ff03,#23a012' },
   { card_icon: 'dice-five', color: '#ff0000,#8c00ff' },
   { card_icon: 'fan', color: '#029aff,#0aff53' },
+  { card_icon: 'umbrella', color: '#ff0000,#8c00ff' },
+  {
+    card_icon: 'walking',
+    color: '#029aff,#0aff53',
+  },
 ];
 
-const colors = [
+const cardColors = [
   '#ff4800, #f01544',
   '#0077ff, #15abf0',
   '#229389, #57c3ad',
@@ -32,30 +39,35 @@ const colors = [
   '#ff0000, #d82acf',
 ];
 
-const createCards = () => {
-  cards.forEach((card) => {
-    const html = `
+const renderCards = () => {
+  cardIcons.forEach(card => {
+    const cardMarkup = `
     <div class="card" data-card="${card.card_icon}">
-        <div class="frontFace cardFaces">
-            <i class="fas fa-${card.card_icon} icon" style="background-image: linear-gradient(to right bottom, ${card.color})"></i>
+        <div class="card-faces front-faces flex-center">
+            <i class="fas fa-${card.card_icon} card-icon" style="background-image: linear-gradient(to right bottom, ${card.color})"></i>
         </div>
-        <div class="backFace cardFaces">
-            <div class="first-bubble bubbles"></div>
-            <div class="second-bubble bubbles"></div>
-            <div class="third-bubble bubbles"></div>
-            <div class="forth-bubble bubbles"></div>
+        <div class="card-faces back-faces">
+            <div class="bubbles first-bubble"></div>
+            <div class="bubbles second-bubble"></div>
+            <div class="bubbles third-bubble"></div>
+            <div class="bubbles forth-bubble"></div>
         </div>
     </div>`;
 
-    cardContainer.insertAdjacentHTML('afterbegin', html);
+    cardContainer.insertAdjacentHTML('afterbegin', cardMarkup);
   });
 };
 
-createCards();
+renderCards();
+
+const renderModal = function (element) {
+  const main = document.querySelector('.main');
+  main.insertAdjacentElement('afterbegin', element);
+};
 
 let finishCard = 0;
 let movesCount = 0;
-const gameTime = 65;
+const gameTime = 75;
 let timeLeft = gameTime;
 let totalWin = 0;
 let totalLose = 0;
@@ -66,24 +78,32 @@ let firstCard, secondCard;
 let lockCard;
 let playerName;
 
-const deck = document.querySelectorAll('.card');
-const timeCounterBackground = document.querySelector('.timeCounterBackground');
-const cardBackFace = document.querySelectorAll('.backFace');
+const cards = document.querySelectorAll('.card');
+const timeIndicator = document.querySelector('.time-indicator');
+const cardBackFace = document.querySelectorAll('.back-faces');
 
-let myMusic = document.getElementById('music');
-document.querySelector('.play').addEventListener('click', play);
-document.querySelector('.pause').addEventListener('click', pause);
+// Game Music 🎵 /////////////////////////////////////////////
 
-function play() {
-  myMusic.play();
-}
+const gameMusic = document.getElementById('gameMusic');
+const playMusicButton = document.getElementById('playMusicButton');
+const pauseMusicButton = document.getElementById('pauseMusicButton');
 
-function pause() {
-  myMusic.pause();
-}
+playMusicButton.addEventListener('click', function () {
+  gameMusic.play();
+  pauseMusicButton.classList.toggle('hidden');
+  playMusicButton.classList.toggle('hidden');
+});
+
+pauseMusicButton.addEventListener('click', function () {
+  gameMusic.pause();
+  playMusicButton.classList.toggle('hidden');
+  pauseMusicButton.classList.toggle('hidden');
+});
+
+// Game Music 🎵 /////////////////////////////////////////
 
 const shuffle = () => {
-  deck.forEach((card) => {
+  cards.forEach(card => {
     const random = Math.floor(Math.random() * 20);
     card.style.order = random;
   });
@@ -92,88 +112,77 @@ const shuffle = () => {
 shuffle();
 
 const backgroundColor = () => {
-  const randomColor = Math.floor(Math.random() * colors.length);
+  const randomColor = Math.floor(Math.random() * cardColors.length);
 
-  cardBackFace.forEach((card) => {
-    card.style.backgroundImage = `linear-gradient(to right bottom, ${colors[randomColor]})`;
+  cardBackFace.forEach(card => {
+    card.style.backgroundImage = `linear-gradient(to right bottom, ${cardColors[randomColor]})`;
   });
 };
 
 backgroundColor();
 
 const resetCard = () => {
-  deck.forEach((card) => card.classList.remove('show'));
+  cards.forEach(card => card.classList.remove('show'));
 };
 
 const main = document.querySelector('.main');
-const startButton = document.getElementById('startButton');
-const restartButton = document.getElementById('restartButton');
-const playAgainButton = document.getElementById('playAgainButton');
-
-const overlay = document.querySelector('.overlay');
-const startGameModal = document.querySelector('.startGame');
+const restartGameButton = document.getElementById('restartGameButton');
 
 const init = function () {
-  startButton.addEventListener('click', startGame);
-  restartButton.addEventListener('click', resetGame);
+  const startGameModal = renderStartGameModel();
+  renderModal(startGameModal);
+  const startGameButton = document.getElementById('startGameButton');
+  startGameButton.addEventListener('click', function () {
+    playerName = document.querySelector('.name').value;
+    startGameModal.remove();
+    startGame();
+  });
+  restartGameButton.addEventListener('click', resetGame);
 };
 
 document.querySelector('.movesCount').textContent = movesCount;
 
 function startGame() {
-  myMusic.play();
-  playerName = document.querySelector('.name').value;
-  startGameModal.classList.add('hidden');
-  overlay.classList.add('hidden');
+  gameMusic.play();
   countdown();
 }
 
 const playAgain = () => {
   resetGame();
-  overlay.classList.add('hidden');
 };
 
 const tryAgain = () => {
   resetGame();
-  overlay.classList.add('hidden');
 };
 
 function hideCard() {
   lockCard = true;
 
-  setTimeout(
-    function () {
-      unmatched.play();
-      firstCard.classList.remove('show');
-      secondCard.classList.remove('show');
-      resetDeck();
-    },
-
-    800
-  );
+  setTimeout(function () {
+    unmatched.play();
+    firstCard.classList.remove('show');
+    secondCard.classList.remove('show');
+    resetDeck();
+  }, 800);
 }
 
 const countdown = () => {
-  document.querySelector('.time').textContent = timeLeft + 's';
+  document.querySelector('.time').textContent = timeLeft + ' sec. Left';
 
-  setInterval(
-    function () {
-      if (timeLeft == 0) {
-        if (!winner) {
-          loseGame();
-        }
-      } else if (timeLeft <= 0) {
-        clearInterval((timeLeft = 0));
+  setInterval(function () {
+    if (timeLeft === 0) {
+      if (!winner) {
+        loseGame();
       }
+    } else if (timeLeft <= 0) {
+      clearInterval((timeLeft = 0));
+    }
 
-      document.querySelector('.time').textContent = timeLeft + 's';
-      timeLeft -= 1;
-      timeCal = ((gameTime - timeLeft) * 100) / gameTime;
-      timeCounterBackground.style.width = timeCal + '%';
-    },
-
-    1000
-  );
+    document.querySelector('.time').textContent = timeLeft + ' sec. Left';
+    timeLeft -= 1;
+    timeCal = ((gameTime - timeLeft) * 100) / gameTime;
+    timeIndicator.style.width = timeCal + '%';
+  }, 1000);
 };
 
 const show = function () {
@@ -200,7 +209,7 @@ const disableCard = () => {
 };
 
 const unDisableCard = () => {
-  deck.forEach((card) => card.classList.remove('disabled'));
+  cards.forEach(card => card.classList.remove('disabled'));
   resetDeck();
 };
 
@@ -216,57 +225,56 @@ const winGame = () => {
   let totalTime = gameTime - timeLeft;
 
   setTimeout(() => {
-    overlay.classList.remove('hidden');
     const markup = `
-    <div class="winGame center">
-      <div class="content">
-        <h2 class="heading">Game finished</h2>
-        <span class="Congratulations">Congratulations ${playerName} you won ❤️</span>
-        <div class="results">
-            <span class="moveResult">🎯 total moves : <span id="totalMove">?</span></span>
-            <span class="timeResult">⏳
-                    total time : <span id="totalTime">?</span>
-            </span>
+    <div class="modal win-game-modal">
+        <div class="modal-first-bubble"></div>
+        <div class="modal-second-bubble"></div>
+        <h2>Game finished</h2>
+        <p class="Congratulations">Great!! ${playerName} you won 🎉</p>
+        <div>
+        <p class="moveResult">🎯 total moves ${movesCount}</p>
+        <p class="timeResult">⏳ total time ${totalTime} sec.</p>
         </div>
-        <span class="comment">💯 ${playerName} You've a very sharp memory🔥🔥</span>
-        <button id="playAgainButton" class="btn">Play again</button>
-      </div>
+        
+        <p>${playerName} you got a sharp memory🔥</p>
+        <button type="button" id="playAgainButton" class="btn">Play again</button>
     </div>`;
 
-    main.insertAdjacentHTML('beforeend', markup);
+    const winGameModal = Overlay(markup);
 
-    const winGameModal = document.querySelector('.winGame');
+    renderModal(winGameModal);
+
     const playAgainButton = document.getElementById('playAgainButton');
 
     playAgainButton.addEventListener('click', () => {
       winGameModal.remove();
       playAgain();
     });
-
-    document.querySelector('#totalMove').textContent = movesCount;
-    document.querySelector('#totalTime').textContent = totalTime + 's';
   }, 1000);
 };
 
 const loseGame = () => {
   totalLose++;
   document.querySelector('.totalLoseCount').innerHTML = totalLose;
-  overlay.classList.remove('hidden');
+
   const markup = `
-  <div class="loseGame center">
-    <div class="content">
-      <h2 class="heading">Game finished</h2>
-      <span class="loseGameMessage">${playerName} you loss game try again❌</span>
-      <button id="tryAgainButton" class="btn">Try again</button>
-    </div>
-  </div>`;
+  <div class="modal lose-game-modal">
+   <div class="modal-first-bubble"></div>
+        <div class="modal-second-bubble"></div>
+      <h2>Game finished</h2>
+      <p>${playerName} you loss 😭 try again 👇</p>
+      <button type="button" id="tryAgainGameButton" class="btn">
+        try again
+      </button>
+  </div>
+</div>`;
 
-  main.insertAdjacentHTML('beforeend', markup);
+  const loseGameModal = Overlay(markup);
+  renderModal(loseGameModal);
 
-  const loseGameModal = document.querySelector('.loseGame');
-  const tryAgainButton = document.getElementById('tryAgainButton');
+  const tryAgainGameButton = document.getElementById('tryAgainGameButton');
 
-  tryAgainButton.addEventListener('click', () => {
+  tryAgainGameButton.addEventListener('click', () => {
     loseGameModal.remove();
     tryAgain();
   });
@@ -290,24 +298,54 @@ const resetGame = () => {
   unDisableCard();
 };
 
+console.log(cards.length);
 const check = () => {
-  if (firstCard.dataset.card === secondCard.dataset.card) {
-    disableCard();
-    finishCard++;
-    matched.play();
+  if (firstCard.dataset.card !== secondCard.dataset.card) return hideCard();
+  disableCard();
+  finishCard++;
+  matched.play();
 
-    if (finishCard === 10) {
-      winGame();
-    }
-  } else {
-    hideCard();
+  if (finishCard === cards.length / 2) {
+    winGame();
   }
 };
 
 const addHandlerCard = function () {
-  deck.forEach((card) => card.addEventListener('click', show));
+  cards.forEach(card => card.addEventListener('click', show));
 };
 
 addHandlerCard();
+
+const Overlay = function (element) {
+  const overlay = document.createElement('div');
+  overlay.setAttribute('class', 'overlay flex-center');
+  overlay.insertAdjacentHTML('afterbegin', element);
+  return overlay;
+};
+
+const renderStartGameModel = function () {
+  const startGameModal = `
+      <div class="modal start-game-model">
+        <div class="modal-first-bubble"></div>
+        <div class="modal-second-bubble"></div>
+        <h2>memory game</h2>
+          <p>
+           On the game board, there are 12 pairs of identical images. Start the game by flipping a card. Then try to find another card that has the same icons as the first. If you can't find a pair, the flipped cards will be flipped back with the face down. Find all the pair within 75 seconds to win.
+          </p>
+          <p>Enter your name and hit on start game button.</p>
+        <div class="input">
+          <input type="text" id="playerName" class="name" placeholder="what's your name" />
+        </div>
+        <button type="button" id="startGameButton" class="btn">start game</button>
+        <div class="flex-center">
+        <p>
+          made by <a href="www.twitter.com/rohanSoni2033">@rohanSoni2033</a>
+        </p>
+        </div>
+        
+      </div>`;
+
+  return Overlay(startGameModal);
+};
 
 init();

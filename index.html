@@ -1,80 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kit.fontawesome.com/29c2b75804.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/29c2b75804.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <title>Memory Game</title>
-</head>
+  </head>
 
-<body>
-    <audio src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3" id="music" autoplay
-        preload="none" loop></audio><audio src="https://assets.mixkit.co/sfx/preview/mixkit-click-error-1110.mp3"
-        id="unmatched" preload="none"></audio><audio
-        src="https://assets.mixkit.co/sfx/preview/mixkit-player-select-notification-2037.mp3" id="matched"
-        preload="none"></audio>
+  <body>
+    <audio
+      src="./music/background-music.mp3"
+      id="gameMusic"
+      autoplay
+      preload="none"
+      loop
+    ></audio>
+    <audio src="./music/wrong.mp3" id="unmatched" preload="none"></audio>
+    <audio src="./music/correct.mp3" id="matched" preload="none"></audio>
     <div class="main">
-        <div class="cardContainer">
+      <div class="card-container"></div>
+      <div class="display">
+        <div class="flex-container">
+          <div class="game-info-container">
+            <p>😭 lose</p>
+            <p class="totalLoseCount">0</p>
+          </div>
+
+          <div class="game-info-container">
+            <p>🥇 win</p>
+            <p class="totalWinCount">0</p>
+          </div>
+          <div class="game-info-container">
+            <p>🎯 moves</p>
+            <p class="movesCount"></p>
+          </div>
         </div>
-        <div class="display">
-            <div class="audioController">
-                <button type="button" class="play audio">🔊</button>
-                <button type="button" class="pause audio">🔈</button>
-            </div>
-            <div class="display_items displayMove">
-                <span class="moves">
-                    <span class="movesText">🎯 moves : <span class="movesCount"></span></span>
-                </span>
-            </div>
-            <div class="display_items gameResultCount">
-                <span class="totalLose">⛔ Lose : <span class="totalLoseCount">0</span>
-                </span>
-                <span class="totalWin">🏆 Win : <span class="totalWinCount">0</span></span>
-            </div>
-            <div class="display_items displayTime">
-                <div class="timeCounterBackground"></div>
-                <span class="timeText">⏳ time : <span class="time">65 </span></span>
-            </div>
-            <button id="restartButton" class="btn">restart</button>
+
+        <div class="flex-container">
+          <div class="timer">
+            <div class="time-indicator"></div>
+            <p class="time">65</p>
+          </div>
+
+          <button
+            type="button"
+            class="icon-button reset-button"
+            id="restartGameButton"
+          >
+            <svg
+              enable-background="new 0 0 24 24"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              class="icon"
+            >
+              <g><path d="M0,0h24v24H0V0z" fill="none" /></g>
+              <g>
+                <g>
+                  <path
+                    d="M6,13c0-1.65,0.67-3.15,1.76-4.24L6.34,7.34C4.9,8.79,4,10.79,4,13c0,4.08,3.05,7.44,7,7.93v-2.02 C8.17,18.43,6,15.97,6,13z M20,13c0-4.42-3.58-8-8-8c-0.06,0-0.12,0.01-0.18,0.01l1.09-1.09L11.5,2.5L8,6l3.5,3.5l1.41-1.41 l-1.08-1.08C11.89,7.01,11.95,7,12,7c3.31,0,6,2.69,6,6c0,2.97-2.17,5.43-5,5.91v2.02C16.95,20.44,20,17.08,20,13z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+
+          <div class="flex-center">
+            <button
+              type="button"
+              class="icon-button music-button hidden"
+              id="playMusicButton"
+            >
+              <svg x="0px" y="0px" viewBox="0 0 300 300" class="icon">
+                <g>
+                  <path
+                    d="M150,0C67.157,0,0,67.162,0,150c0,82.841,67.157,150,150,150s150-67.159,150-150C300,67.162,232.843,0,150,0z
+                         M205.846,158.266l-86.557,49.971c-1.32,0.765-2.799,1.144-4.272,1.144c-1.473,0-2.949-0.379-4.274-1.144
+                        c-2.64-1.525-4.269-4.347-4.269-7.402V100.89c0-3.053,1.631-5.88,4.269-7.402c2.648-1.528,5.906-1.528,8.551,0l86.557,49.974
+                        c2.645,1.53,4.274,4.352,4.269,7.402C210.12,153.916,208.494,156.741,205.846,158.266z"
+                  />
+                </g>
+              </svg>
+            </button>
+            <button
+              type="button"
+              id="pauseMusicButton"
+              class="icon-button music-button"
+            >
+              <svg y="0px" viewBox="0 0 300.003 300.003" class="icon">
+                <g>
+                  <path
+                    d="M150.001,0c-82.838,0-150,67.159-150,150c0,82.838,67.162,150.003,150,150.003c82.843,0,150-67.165,150-150.003
+                        C300.001,67.159,232.846,0,150.001,0z M134.41,194.538c0,9.498-7.7,17.198-17.198,17.198s-17.198-7.7-17.198-17.198V105.46
+                        c0-9.498,7.7-17.198,17.198-17.198s17.198,7.7,17.198,17.198V194.538z M198.955,194.538c0,9.498-7.701,17.198-17.198,17.198
+                        c-9.498,0-17.198-7.7-17.198-17.198V105.46c0-9.498,7.7-17.198,17.198-17.198s17.198,7.7,17.198,17.198V194.538z"
+                  />
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
-    </div>
-    <div class="overlay"></div>
-    <div class="startGame center">
-        <div class="start_first-bubble"></div>
-        <div class="start_second-bubble"></div>
-        <div class="start_third-bubble"></div>
-        <span class="heading">memory game</span>
-        <div class="instructions">
-            <ul class="instructions_lists">
-                <li class="instructions_list_item">
-                    <i class="fas fa-arrow-circle-right"></i> there is 10 pair of
-                    matching cards.
-                </li>
-                <li class="instructions_list_item">
-                    <i class="fas fa-arrow-circle-right"></i> all cards are flipped, unflip the card and try to find its
-                    match.
-                </li>
-                <li class="instructions_list_item">
-                    <i class="fas fa-arrow-circle-right"></i> you need to find all
-                    matching card within 65 second 🕐 to win
-                </li>
-                <li class="instructions_list_item">
-                    <i class="fas fa-arrow-circle-right"></i> enter your name and hit
-                    on start.
-                </li>
-            </ul>
-        </div>
-        <div class="input">
-            <input type="text" class="name" placeholder="Enter your name here" />
-        </div>
-        <button id="startButton" class="btn secondary">start</button><span class="creator">Made by <span
-                class="signature">rohan soni</span></span>
+      </div>
     </div>
     <script src="script.js"></script>
-    <!-- <script src="index.js"></script> -->
-</body>
-
+  </body>
 </html>
